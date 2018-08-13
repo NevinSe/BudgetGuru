@@ -1,0 +1,42 @@
+﻿@model BudgetGuru.Models.Expenditures
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Expenditures</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpenditureDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExpenditureDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpenditureCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExpenditureCost)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ExpenditureId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<BudgetGuru.Models.Bills>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Bills</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BillDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MonthlyCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsPaid)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BillDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MonthlyCost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsPaid)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BillId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.BillId })
+        </td>
+    </tr>
+}
+
+</table>
