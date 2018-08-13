@@ -17,7 +17,7 @@ namespace BudgetGuru.Controllers
         // GET: Expenditures
         public ActionResult Index()
         {
-            return View(db.Expenditures.ToList());
+            return View(db.Expenditures.Where(e=> e.UserName == User.Identity.Name).ToList());
         }
 
         // GET: Expenditures/Details/5
