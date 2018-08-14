@@ -53,7 +53,7 @@ namespace BudgetGuru.Controllers
                 bills.UserName = User.Identity.Name; 
                 db.Bills.Add(bills);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
             return View(bills);

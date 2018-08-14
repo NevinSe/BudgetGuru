@@ -11,10 +11,9 @@ namespace BudgetGuru.Models
     {
         [Key]
         public int BudgetId { get; set; }
-        [ForeignKey("ApplicationUser")]
         [Display(Name = "User Name")]
         public string UserName { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
+        [Display(Name = "Month")]
         public int MonthId { get; set; }
         [Display(Name = "Income")]
         public double Income { get; set; }
