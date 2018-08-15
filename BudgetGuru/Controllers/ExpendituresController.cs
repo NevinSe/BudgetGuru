@@ -38,7 +38,8 @@ namespace BudgetGuru.Controllers
         // GET: Expenditures/Create
         public ActionResult Create()
         {
-            return View();
+            Expenditures expenditures = new Expenditures();
+            return View(expenditures);
         }
 
         // POST: Expenditures/Create
@@ -46,7 +47,7 @@ namespace BudgetGuru.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ExpenditureId,ExpenditureDescription,ExpenditureCost")] Expenditures expenditures)
+        public ActionResult Create([Bind(Include = "ExpenditureDescription,ExpenditureCost")] Expenditures expenditures)
         {
             if (ModelState.IsValid)
             {

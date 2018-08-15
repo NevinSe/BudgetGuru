@@ -5,7 +5,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.UI.DataVisualization.Charting;
 using BudgetGuru.Models;
 
 namespace BudgetGuru.Controllers
@@ -84,6 +86,17 @@ namespace BudgetGuru.Controllers
         {
 
             return RedirectToAction("Home");
+        }
+        public ActionResult BudgetChart()
+        {
+            return null;
+
+            //    .AddTitle("Chart Title")
+            //.AddSeries(
+            //    name: "Employee",
+            //    xValue: new[] { "Nevin", "Dylan", "Logan", "Mary", "Dave" },
+            //    yValues: new[] { "2", "6", "4", "5", "3" })
+            //    return null;
         }
     }
 }
