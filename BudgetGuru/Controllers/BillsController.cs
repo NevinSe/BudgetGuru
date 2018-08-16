@@ -46,16 +46,15 @@ namespace BudgetGuru.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BillId,BillDescription,MonthlyCost,IsPaid")] Bills bills)
+        public ActionResult Create([Bind(Include = "BillDescription,MonthlyCost")] Bills bills)
         {
             if (ModelState.IsValid)
             {
-                bills.UserName = User.Identity.Name; 
+                bills.UserName = User.Identity.Name;
                 db.Bills.Add(bills);
                 db.SaveChanges();
                 return RedirectToAction("Create");
             }
-
             return View(bills);
         }
 
@@ -79,13 +78,13 @@ namespace BudgetGuru.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BillId,UserName,BillDescription,MonthlyCost,IsPaid")] Bills bills)
+        public ActionResult Edit([Bind(Include = "BillDescription,MonthlyCost")] Bills bills)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(bills).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Budget");
             }
             return View(bills);
         }
@@ -102,7 +101,9 @@ namespace BudgetGuru.Controllers
             {
                 return HttpNotFound();
             }
-            return View(bills);
+            bills.IsPaid = true;
+            db.SaveChanges();
+            return RedirectToAction("Index", "Budget");
         }
 
         // POST: Bills/Delete/5
@@ -111,9 +112,9 @@ namespace BudgetGuru.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Bills bills = db.Bills.Find(id);
-            db.Bills.Remove(bills);
+            bills.IsPaid = true;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Budget");
         }
 
         protected override void Dispose(bool disposing)

@@ -18,15 +18,27 @@ namespace BudgetGuru.Controllers
 
         public ActionResult Index()
         {
+            var month = DateTime.Now.Month;
+            var year = DateTime.Now.Year;
+            var user = User.Identity.Name;
             BudgetModel budgetModel = new BudgetModel();
-            budgetModel.Budget = db.Budgets.Where(b => b.UserName == User.Identity.Name).Single();
-            budgetModel.BillsList = db.Bills.Where(b => b.UserName == User.Identity.Name).ToList();
-            budgetModel.DebtList = db.Debts.Where(b => b.UserName == User.Identity.Name).ToList();
-            budgetModel.ExpendituresList = db.Expenditures.Where(b => b.UserName == User.Identity.Name).ToList();
+            budgetModel.Budget = db.Budgets.Where(b => b.UserName == user && b.MonthId == month && b.Year == year).SingleOrDefault();
+            if (budgetModel.Budget == default(Budget))
+            {
+                budgetModel = NewMonth();
+            }
+            budgetModel.BillsList = db.Bills.Where(b => b.UserName == user && b.IsPaid != true).ToList();
+            budgetModel.DebtList = db.Debts.Where(b => b.UserName == user).ToList();
+            budgetModel.ExpendituresList = db.Expenditures.Where(b => b.UserName == user && b.ExpendMonth == month && b.ExpendYear == year).ToList();
             budgetModel.Budget.Bills = budgetModel.BillsList.Where(b=>b.IsPaid != true).Select(p => p.MonthlyCost).Sum();
             budgetModel.Budget.Debt = budgetModel.DebtList.Select(p => p.DebtValue).Sum();
             budgetModel.Budget.ExtraExpenditures = budgetModel.ExpendituresList.Select(p => p.ExpenditureCost).Sum();
-            budgetModel.Budget.MonthlyExpenditures = budgetModel.Budget.ExtraExpenditures + budgetModel.BillsList.Where(b => b.IsPaid == true).Select(p => p.MonthlyCost).Sum();
+            budgetModel.Budget.MonthlyExpenditures = db.Bills.Where(b => b.UserName == user && b.IsPaid == true).Select(p => p.MonthlyCost).Sum();
+            budgetModel.Budget.MonthTotalCost = budgetModel.Budget.MonthlyExpenditures + budgetModel.Budget.ExtraExpenditures;
+            budgetModel.Budget.NetProfit = Math.Round(budgetModel.Budget.Income/12 , 0) - budgetModel.Budget.MonthlyExpenditures;
+            db.SaveChanges();
+            budgetModel.BudgetList = db.Budgets.Where(b => b.UserName == user && b.MonthId != month).OrderByDescending(q=>q.MonthId).Select(p => p).ToList();
+            budgetModel.Budget.Income = Math.Round(budgetModel.Budget.Income / 12, 0);
             return View(budgetModel);
         }
         public ActionResult Home()
@@ -89,14 +101,58 @@ namespace BudgetGuru.Controllers
         }
         public ActionResult BudgetChart()
         {
-            return null;
-
-            //    .AddTitle("Chart Title")
-            //.AddSeries(
-            //    name: "Employee",
-            //    xValue: new[] { "Nevin", "Dylan", "Logan", "Mary", "Dave" },
-            //    yValues: new[] { "2", "6", "4", "5", "3" })
-            //    return null;
+            string Yellow1 = @"<Chart BackColor=""darkorange"" BackGradientStyle=""TopBottom"" BorderColor=""#B8860B"" BorderWidth=""0"" BorderlineDashStyle=""Solid"" Palette=""BrightPastel"">
+                                <ChartAreas>
+	                                <ChartArea Name=""Default"" _Template_=""All"" BackColor=""Transparent"" BackSecondaryColor=""Black"" BorderColor=""64, 64, 64, 64"" BorderDashStyle=""Solid"" ShadowColor=""Transparent"">
+		                                <AxisY>
+			                                <LabelStyle Font=""Trebuchet MS, 8.25pt, style=Bold"" />
+		                                </AxisY>
+		                                <AxisX LineColor=""64, 64, 64, 64"" Interval=""1"" >
+			                                <LabelStyle Font=""Trebuchet MS, 8.25pt, style=Bold"" />
+		                                </AxisX>
+	                                </ChartArea>
+                                </ChartAreas>
+                                <Legends>
+                                <Legend _Template_=""All"" BackColor=""Transparent"" Docking=""Bottom"" Font=""Trebuchet MS, 8.25pt, style=Bold"" LegendStyle=""Row"">
+                                </Legend>
+                                </Legends>
+                                </Chart>";
+            double[] profit = new double[12];
+           
+            for (int i = 1; i < 13; i++)
+            {
+                var netProfit = db.Budgets.Where(p => p.MonthId == i).Select(p => p.NetProfit).SingleOrDefault();
+                if (netProfit == default(double))
+                {
+                    profit[i - 1] = 0;
+                }
+                else
+                {
+                    profit[i - 1] = netProfit;
+                }
+            }
+            var chart = new System.Web.Helpers.Chart(width: 800, height: 400, theme: Yellow1) 
+            .AddTitle("Monthly Profits")
+            .SetXAxis("Months")
+            .SetYAxis("Money")
+            .AddSeries(
+                chartType: "Line",
+                name: "Employee",
+                xValue: new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" },
+                xField: "Months",
+                yValues: profit,
+                yFields:"$").Write();
+                return null;
+        }
+        public BudgetModel NewMonth()
+        {
+            var month = DateTime.Now.Month;
+            var year = DateTime.Now.Year;
+            BudgetModel budgetModel = new BudgetModel();
+            budgetModel.Budget.Income = db.Budgets.Where(b => b.UserName == User.Identity.Name && b.MonthId == (month - 1)).Select(i => i.Income).Single();
+            budgetModel.Budget.MonthId = month;
+            budgetModel.Budget.Year = year;
+            return budgetModel;
         }
     }
 }

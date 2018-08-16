@@ -52,9 +52,11 @@ namespace BudgetGuru.Controllers
             if (ModelState.IsValid)
             {
                 expenditures.UserName = User.Identity.Name;
+                expenditures.ExpendMonth = DateTime.Now.Month;
+                expenditures.ExpendYear = DateTime.Now.Year;
                 db.Expenditures.Add(expenditures);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Budget");
             }
 
             return View(expenditures);

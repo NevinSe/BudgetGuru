@@ -15,5 +15,9 @@ namespace BudgetGuru.Models
         public string ExpenditureDescription { get; set; }
         [Display(Name = "Expenditure Cost")]
         public double ExpenditureCost { get; set; }
+        [Display(Name = "Month")]
+        public int ExpendMonth { get; set; }
+        [Display(Name ="Year")]
+        public int ExpendYear { get; set; }
     }
 }

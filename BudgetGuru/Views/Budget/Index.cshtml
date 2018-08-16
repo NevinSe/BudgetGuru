@@ -1,63 +1,64 @@
 ﻿@model BudgetGuru.Models.BudgetModel
 @{
     ViewBag.Title = "Index";
-    ViewBag.Checked = false;
 }
 
-<h2>Budget Command Console</h2>
+<h2 style=" color: darkorange"><u><i>Budget Command Console</i></u></h2>
+<br />
+<br />
 <div class="row">
     <div class="table-responsive">
-        <center><h5>Overview</h5></center>
+        <center><h5 style="color: darkorange">Current Month Overview</h5></center>
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Budget.Income)
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Budget.Income)</u>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Budget.Savings)
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Budget.Savings)</u>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Budget.MonthlyExpenditures)
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Budget.Bills)</u>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Budget.Debt)
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Budget.Debt)</u>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Budget.Bills)
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Budget.MonthlyExpenditures)</u>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Budget.ExtraExpenditures)
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Budget.ExtraExpenditures)</u>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Budget.MonthTotalCost)
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Budget.MonthTotalCost)</u>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Budget.NetProfit)
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Budget.NetProfit)</u>
                 </th>
             </tr>
             <tr>
-                <td>
+                <td style="color: lightgreen">
                     $@Html.DisplayFor(model => model.Budget.Income)
                 </td>
-                <td>
+                <td style="color: lightgreen">
                     $@Html.DisplayFor(model => model.Budget.Savings)
                 </td>
-                <td>
-                    $@Html.DisplayFor(model => model.Budget.MonthlyExpenditures)
-                </td>
-                <td>
-                    $@Html.DisplayFor(model => model.Budget.Debt)
-                </td>
-                <td>
+                <td style="color: lightgreen">
                     $@Html.DisplayFor(model => model.Budget.Bills)
                 </td>
-                <td>
-                    $@Html.DisplayFor(model => model.Budget.ExtraExpenditures)
+                <td style="color: lightgreen">
+                    $@Html.DisplayFor(model => model.Budget.Debt)
                 </td>
-                <td>
+                <td style="color: lightgreen">
                     $@Html.DisplayFor(model => model.Budget.MonthlyExpenditures)
                 </td>
-                <td>
+                <td style="color: lightgreen">
+                    $@Html.DisplayFor(model => model.Budget.ExtraExpenditures)
+                </td>
+                <td style="color: lightgreen">
+                    $@Html.DisplayFor(model => model.Budget.MonthTotalCost)
+                </td>
+                <td style="color: lightgreen">
                     $@Html.DisplayFor(model => model.Budget.NetProfit)
                 </td>
             </tr>
@@ -65,63 +66,150 @@
     </div>
 </div>
 
-<img src="@Url.Action("BudgetChart")"/>
+<div class="row">
+    <div class="col-6">
+        <img src="@Url.Action("BudgetChart")" />
+    </div>
+    <div class="col-3"></div>
+    <div class="table-responsive col-3">
+        <center><h5 style="color: darkorange">Previous Months</h5></center>
+        <table class="table">
+            <tr>
+                <th>
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Budget.MonthId) / @Html.DisplayNameFor(model => model.Budget.Year)</u>
+                </th>
+                <th>
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Budget.NetProfit)</u>
+                </th>
+            </tr>
+            @foreach (var item in Model.BudgetList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MonthId) / @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    <td style="color: lightgreen">
+                        $@Html.DisplayFor(modelItem => item.NetProfit)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<br />
+<br />
+<br />
     <div class="row">
         <div class="table-responsive col-6">
-            <center><h5>Bills</h5></center>
+            <center><h5 style="color: darkorange">Extra Expenditures</h5></center>
             <table class="table">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Bills.BillDescription)
+                        <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Bills.BillDescription)</u>
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Bills.MonthlyCost)
+                        <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Bills.MonthlyCost)</u>
                     </th>
                     <th>
-                        
+
                     </th>
                     <th>
 
                     </th>
                 </tr>
+                @if (Model.BillsList.Count != 0)
+                {
+                    foreach (var item in Model.BillsList)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BillDescription)
+                            </td>
+                            <td style="color: lightgreen">
+                                $@Html.DisplayFor(modelItem => item.MonthlyCost)
+                            </td>
+                            <td>
 
-                @foreach (var item in Model.BillsList)
+                                @Html.ActionLink("Pay", "Delete", "Bills", new { id = item.BillId }, null)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", "Bills", new { id = item.BillId }, null) |
+                                @Html.ActionLink("Delete", "Destroy", "Bills", null)
+                            </td>
+                        </tr>
+                    }
+                }
+                else
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.BillDescription)
+                            <center style="color: yellow">You Paid All Your bills!</center>
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MonthlyCost)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Pay", "Delete", "Bills", new { id = item.BillId })
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", "Bills", new { id = item.BillId })
-                        </td>
+                        <td></td>
                     </tr>
                 }
 
+                @Html.ActionLink("Add New Bill?", "Create", "Bills")
             </table>
         </div>
         <div class="col-6">
-            <center><h5>Debts</h5></center>
+            <center><h5 style="color: darkorange">Extra Expenditures</h5></center>
             <table class="table">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Debt.Description)
+                        <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Expenditures.ExpenditureDescription)</u>
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Debt.DebtValue)
+                        <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Expenditures.ExpenditureCost)</u>
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Debt.Interest)
+
+                    </th>
+                </tr>
+                @foreach (var item in Model.ExpendituresList)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpenditureDescription)
+                        </td>
+                        <td style="color: lightgreen">
+                            $@Html.DisplayFor(modelItem => item.ExpenditureCost)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "Bills", new { id = item.ExpenditureId }, null) |
+                            @Html.ActionLink("Delete", "Delete", "Bills", new { id = item.ExpenditureId }, null)
+                        </td>
+                    </tr>
+                }
+                @Html.ActionLink("Add Expenditure?", "Create", "Expenditures")
+            </table>
+
+        </div>
+
+    </div>
+<br />
+<br />
+<br />
+    <div class="row">
+        <div class="table-responsive col-8">
+            <center><h5 style="color: darkorange">Debt</h5></center>
+            <table class="table">
+                <tr>
+                    <th>
+                        <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Debt.Description)</u>
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Debt.AmountPaid)
+                        <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Debt.DebtValue)</u>
                     </th>
-                    <th></th>
+                    <th>
+                        <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Debt.Interest)</u>
+                    </th>
+                    <th>
+                        <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Debt.AmountPaid)</u>
+                    </th>
+                    <th>
+
+                    </th>
                 </tr>
 
                 @foreach (var item in Model.DebtList)
@@ -130,60 +218,26 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Description)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DebtValue)
+                        <td style="color: lightgreen">
+                            $@Html.DisplayFor(modelItem => item.DebtValue)
+                        </td>
+                        <td style="color: lightgreen">
+                            %@Html.DisplayFor(modelItem => item.Interest)
+                        </td>
+                        <td style="color: lightgreen">
+                            $@Html.DisplayFor(modelItem => item.AmountPaid)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Interest)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AmountPaid)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Make Payment", "Edit", "Debts", new { id = item.DebtId })
-                            
-                        </td>
-                    </tr>
-                }
-
-            </table>
-
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="table-responsive col-3">
-            <center><h5>Extra Expenditures</h5></center>
-            <table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Expenditures.ExpenditureDescription)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Expenditures.ExpenditureCost)
-                    </th>
-                    <th></th>
-                </tr>
-                @foreach (var item in Model.ExpendituresList)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ExpenditureDescription)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ExpenditureCost)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", "Bills", new { id = item.ExpenditureId }) |
-                            @Html.ActionLink("Delete", "Delete", "Bills", new { id = item.ExpenditureId })
+                            @Html.ActionLink("Make Payment", "Edit", "Debts", new { id = item.DebtId }, null)
                         </td>
                     </tr>
                 }
+                
             </table>
         </div>
     </div>
     <div class="row">
-        <h6 class="offset-2">@Html.ActionLink("Add Expenditures", "Create", "Expenditures", new { Style = "color:Red" })</h6>
+       
     </div>
 
 
