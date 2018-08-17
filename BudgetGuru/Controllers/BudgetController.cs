@@ -37,6 +37,7 @@ namespace BudgetGuru.Controllers
             budgetModel.Budget.MonthTotalCost = budgetModel.Budget.MonthlyExpenditures + budgetModel.Budget.ExtraExpenditures;
             budgetModel.Budget.NetProfit = Math.Round(budgetModel.Budget.Income/12 , 0) - budgetModel.Budget.MonthlyExpenditures;
             db.SaveChanges();
+            budgetModel.GoalsList = db.Goals.Where(g => g.UserName == user).ToList();
             budgetModel.BudgetList = db.Budgets.Where(b => b.UserName == user && b.MonthId != month).OrderByDescending(q=>q.MonthId).Select(p => p).ToList();
             budgetModel.Budget.Income = Math.Round(budgetModel.Budget.Income / 12, 0);
             return View(budgetModel);
@@ -50,12 +51,27 @@ namespace BudgetGuru.Controllers
             };
             return View(budgetModel);
         }
+        public ActionResult Budget()
+        {
+            Budget budget = new Budget();
+            return View(budget);
+        }
+        [HttpPost]
+        public ActionResult Budget(Budget budget)
+        {
+            var month = DateTime.Now.Month;
+            var year = DateTime.Now.Year;
+            var userBudget = db.Budgets.Where(b => b.UserName == User.Identity.Name && b.MonthId == month && b.Year == year).Single();
+            userBudget.MonthlyLimit = budget.MonthlyLimit;
+            db.SaveChanges();
+            return RedirectToAction("Index","Budget");
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Home(BudgetModel budgetModel, string Month, string Date, string Year)
         {
             budgetModel.Budget.UserName = User.Identity.Name;
-            budgetModel.Goals.AchievementDate = new DateTime(int.Parse(Year), int.Parse(Month), int.Parse(Date));
+            budgetModel.Goals.AchievementDate = new DateTime(int.Parse(Year), int.Parse(Month), int.Parse(Date)).Date;
             budgetModel.Goals.UserName = budgetModel.Budget.UserName;
             db.Goals.Add(budgetModel.Goals);
             db.Budgets.Add(budgetModel.Budget);
@@ -101,7 +117,7 @@ namespace BudgetGuru.Controllers
         }
         public ActionResult BudgetChart()
         {
-            string Yellow1 = @"<Chart BackColor=""darkorange"" BackGradientStyle=""TopBottom"" BorderColor=""#B8860B"" BorderWidth=""0"" BorderlineDashStyle=""Solid"" Palette=""BrightPastel"">
+            string Yellow1 = @"<Chart BackColor=""darkorange"" BackGradientStyle=""TopBottom"" BorderColor=""black"" BorderWidth=""0"" BorderlineDashStyle=""Solid"" Palette=""BrightPastel"">
                                 <ChartAreas>
 	                                <ChartArea Name=""Default"" _Template_=""All"" BackColor=""Transparent"" BackSecondaryColor=""Black"" BorderColor=""64, 64, 64, 64"" BorderDashStyle=""Solid"" ShadowColor=""Transparent"">
 		                                <AxisY>

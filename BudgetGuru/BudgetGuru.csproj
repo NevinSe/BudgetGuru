@@ -217,6 +217,10 @@
     <Compile Include="Migrations\201808161630414_expendYearMinth.Designer.cs">
       <DependentUpon>201808161630414_expendYearMinth.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808171626116_monthlylimitadded.cs" />
+    <Compile Include="Migrations\201808171626116_monthlylimitadded.Designer.cs">
+      <DependentUpon>201808171626116_monthlylimitadded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Bills.cs" />
@@ -338,6 +342,7 @@
     <Content Include="Views\Budget\CreateDebt.cshtml" />
     <Content Include="Views\Budget\Index.cshtml" />
     <Content Include="Views\Shared\ChartArrayBasic.cshtml" />
+    <Content Include="Views\Budget\Budget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -362,6 +367,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808161630414_expendYearMinth.resx">
       <DependentUpon>201808161630414_expendYearMinth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808171626116_monthlylimitadded.resx">
+      <DependentUpon>201808171626116_monthlylimitadded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

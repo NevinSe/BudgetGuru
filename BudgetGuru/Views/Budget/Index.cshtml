@@ -3,7 +3,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2 style=" color: darkorange"><u><i>Budget Command Console</i></u></h2>
+<h2 style=" color: darkturquoise"><u><i>Budget Command Console</i></u></h2>
 <br />
 <br />
 <div class="row">
@@ -28,6 +28,9 @@
                 </th>
                 <th>
                     <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Budget.ExtraExpenditures)</u>
+                </th>
+                <th>
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Budget.MonthlyLimit)</u>
                 </th>
                 <th>
                     <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Budget.MonthTotalCost)</u>
@@ -56,6 +59,9 @@
                     $@Html.DisplayFor(model => model.Budget.ExtraExpenditures)
                 </td>
                 <td style="color: lightgreen">
+                    $@Html.DisplayFor(model => model.Budget.MonthlyLimit)
+                </td>
+                <td style="color: lightgreen">
                     $@Html.DisplayFor(model => model.Budget.MonthTotalCost)
                 </td>
                 <td style="color: lightgreen">
@@ -63,14 +69,18 @@
                 </td>
             </tr>
         </table>
+        <hr style="border-color: darkorange" />
     </div>
 </div>
-
+<div class="offset-9">@Html.ActionLink("Set Spending Limit", "Budget", "Budget", null)</div>
+<br />
+<br />
 <div class="row">
     <div class="col-6">
         <img src="@Url.Action("BudgetChart")" />
     </div>
     <div class="col-3"></div>
+    
     <div class="table-responsive col-3">
         <center><h5 style="color: darkorange">Previous Months</h5></center>
         <table class="table">
@@ -94,6 +104,7 @@
                 </tr>
             }
         </table>
+        <hr style="border-color: darkorange" />
     </div>
 </div>
 <br />
@@ -101,7 +112,7 @@
 <br />
     <div class="row">
         <div class="table-responsive col-6">
-            <center><h5 style="color: darkorange">Extra Expenditures</h5></center>
+            <center><h5 style="color: darkorange">Bills</h5></center>
             <table class="table">
                 <tr>
                     <th>
@@ -151,6 +162,7 @@
 
                 @Html.ActionLink("Add New Bill?", "Create", "Bills")
             </table>
+            <hr style="border-color: darkorange" />
         </div>
         <div class="col-6">
             <center><h5 style="color: darkorange">Extra Expenditures</h5></center>
@@ -183,59 +195,105 @@
                 }
                 @Html.ActionLink("Add Expenditure?", "Create", "Expenditures")
             </table>
-
+            <hr style="border-color: darkorange" />
         </div>
 
     </div>
 <br />
 <br />
 <br />
-    <div class="row">
-        <div class="table-responsive col-8">
-            <center><h5 style="color: darkorange">Debt</h5></center>
-            <table class="table">
+<div class="row">
+    <div class="table-responsive col-8">
+        <center><h5 style="color: darkorange">Debt</h5></center>
+
+        <table class="table">
+            <tr>
+                <th>
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Debt.Description)</u>
+                </th>
+                <th>
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Debt.DebtValue)</u>
+                </th>
+                <th>
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Debt.Interest)</u>
+                </th>
+                <th>
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Debt.AmountPaid)</u>
+                </th>
+                <th>
+
+                </th>
+            </tr>
+
+            @foreach (var item in Model.DebtList)
+            {
                 <tr>
-                    <th>
-                        <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Debt.Description)</u>
-                    </th>
-                    <th>
-                        <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Debt.DebtValue)</u>
-                    </th>
-                    <th>
-                        <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Debt.Interest)</u>
-                    </th>
-                    <th>
-                        <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Debt.AmountPaid)</u>
-                    </th>
-                    <th>
-
-                    </th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td style="color: lightgreen">
+                        $@Html.DisplayFor(modelItem => item.DebtValue)
+                    </td>
+                    <td style="color: lightgreen">
+                        %@Html.DisplayFor(modelItem => item.Interest)
+                    </td>
+                    <td style="color: lightgreen">
+                        $@Html.DisplayFor(modelItem => item.AmountPaid)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Make Payment", "Edit", "Debts", new { id = item.DebtId }, null)
+                    </td>
                 </tr>
+            }
 
-                @foreach (var item in Model.DebtList)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td style="color: lightgreen">
-                            $@Html.DisplayFor(modelItem => item.DebtValue)
-                        </td>
-                        <td style="color: lightgreen">
-                            %@Html.DisplayFor(modelItem => item.Interest)
-                        </td>
-                        <td style="color: lightgreen">
-                            $@Html.DisplayFor(modelItem => item.AmountPaid)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Make Payment", "Edit", "Debts", new { id = item.DebtId }, null)
-                        </td>
-                    </tr>
-                }
-                
-            </table>
-        </div>
+        </table>
+        <hr style="border-color: darkorange" />
     </div>
+
+</div>
+
+<div class="row">
+    <div class="table-responsive col-8">
+        <center><h5 style="color: darkorange">Goals</h5></center>
+        <table class="table">
+            <tr>
+                <th>
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Goals.GoalDescription)</u>
+                </th>
+                <th>
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Goals.TotalCost)</u>
+                </th>
+                <th>
+                    <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Goals.AchievementDate)</u>
+                </th>
+                <th>
+                    <a style="color: darkturquoise">@Html.DisplayNameFor(model => model.Budget.Savings):</a><a style="color: lightgreen"> $@Html.DisplayFor(model => model.Budget.Savings)</a>
+                </th>
+            </tr>
+
+            @foreach (var item in Model.GoalsList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GoalDescription)
+                    </td>
+                    <td style="color: lightgreen">
+                        $@Html.DisplayFor(modelItem => item.TotalCost)
+                    </td>
+                    <td style="color: lightgreen">
+                        @Html.DisplayFor(modelItem => item.AchievementDate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Use Savings to Achieve Goal?", "Edit", "Goals", new { id = item.GoalId }, null)
+                    </td>
+                </tr>
+            }
+            @Html.ActionLink("Add New Goal?", "Create", "Goals")
+
+        </table>
+        <hr style="border-color: darkorange" />
+    </div>
+</div>
     <div class="row">
        
     </div>

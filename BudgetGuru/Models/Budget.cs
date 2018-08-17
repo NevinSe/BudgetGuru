@@ -19,6 +19,8 @@ namespace BudgetGuru.Models
         public int Year { get; set; }
         [Display(Name = "Income")]
         public double Income { get; set; }
+        [Display(Name = "Montly Limit")]
+        public double MonthlyLimit { get; set; }
         [Display(Name = "Monthly Cost")]
         public double MonthTotalCost { get; set; }
         [Display(Name = "Monthly Expenditures")]

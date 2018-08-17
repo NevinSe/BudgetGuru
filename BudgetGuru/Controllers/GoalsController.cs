@@ -46,7 +46,7 @@ namespace BudgetGuru.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "GoalId,GoalDescription,AchievementDate,TotalCost")] Goals goals)
+        public ActionResult Create([Bind(Include = "GoalDescription,TotalCost")] Goals goals, string date, string month, string year)
         {
             if (ModelState.IsValid)
             {

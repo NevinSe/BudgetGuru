@@ -20,19 +20,9 @@
                     <a class="nav-link" href="~/Views/Budget/Home.cshtml">Lets Get Started!</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "Budget")"><span>Home</span></a>
+                    <a  style="color:black" class="nav-link" href="@Url.Action("Index", "Budget")"><span>Home</span></a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="~/Views/Budget/Index.cshtml">Home Console</a>
-                        <a class="dropdown-item" runat="server" href="~/Views/Account/Register.cshtml">Register</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">nothing here</a>
-                    </div>
-                </li>
+                
             </ul>
            <div>@Html.Partial("_LoginPartial")</div>
         </div>
