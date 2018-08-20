@@ -4,8 +4,8 @@
     ViewBag.Title = "CreateDebt";
 }
 
-<h2>Time to add some Debt values</h2>
-<h5>&emsp;&emsp;&emsp;If you have none, click button at the bottem to move on!</h5>
+<h2 style="color:darkturquoise">Time to add some Debt values</h2>
+<h5 style="color:darkturquoise">&emsp;&emsp;&emsp;If you have none, click button at the bottem to move on!</h5>
 
 @using (Html.BeginForm()) 
 {
@@ -15,7 +15,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            <h6>What is this debt?</h6>
+            <h6 style="color:darkorange">What is this debt?</h6>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
@@ -23,7 +23,7 @@
         </div>
 
         <div class="form-group">
-            <h6>What is the interest rate for this debt?</h6>
+            <h6 style="color:darkorange">What is the interest rate for this debt?</h6>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Interest, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Interest, "", new { @class = "text-danger" })
@@ -31,7 +31,7 @@
         </div>
 
         <div class="form-group">
-            <h6>How much do you still owe on this debt?</h6>
+            <h6 style="color:darkorange">How much do you still owe on this debt?</h6>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DebtValue, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.DebtValue, "", new { @class = "text-danger" })
@@ -39,7 +39,7 @@
         </div>
 
         <div class="form-group">
-            <h6>What is the total amount you have paid  <br />towards this debt so far?</h6>
+            <h6 style="color:darkorange">What is the total amount you have paid  <br />towards this debt so far?</h6>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.AmountPaid, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AmountPaid, "", new { @class = "text-danger" })
@@ -56,7 +56,5 @@
 
 <div>
     <br />
-    <br />
-    <h5>Done?</h5>
-    <h6>@Html.ActionLink("Click here!", "Index")</h6>
+    <h6>@Html.ActionLink("Click here to move on", "Index")</h6>
 </div>

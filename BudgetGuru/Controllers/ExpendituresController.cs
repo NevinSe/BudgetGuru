@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -49,8 +50,11 @@ namespace BudgetGuru.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ExpenditureDescription,ExpenditureCost")] Expenditures expenditures, HttpPostedFileBase postedFile)
+        public ActionResult Create([Bind(Include = "ExpenditureDescription,ExpenditureCost")] Expenditures expenditures)
         {
+            ApplicationUser user = new ApplicationUser();
+            var useridentity = User.Identity.Name;
+            user = db.Users.Where(u => u.UserName == useridentity).Single();
             if (ModelState.IsValid)
             {
                 expenditures.UserName = User.Identity.Name;
@@ -58,20 +62,36 @@ namespace BudgetGuru.Controllers
                 expenditures.ExpendYear = DateTime.Now.Year;
                 db.Expenditures.Add(expenditures);
                 db.SaveChanges();
-                return RedirectToAction("Index", "Budget");
-            }
-            if (postedFile != null)
-            {
-                string path = Server.MapPath("~/Uploads/");
-                if (!Directory.Exists(path))
+                if (db.Budgets.Where(e => e.UserName == useridentity).Select(p => p.ExtraExpenditures).Sum() > db.Budgets.Where(b => b.UserName == useridentity).Select(q => q.MonthlyLimit).Sum())
                 {
-                    Directory.CreateDirectory(path);
-                }
+                    var fromAddress = new MailAddress("Nevin.Seibel.Test@gmail.com", "Budget Guru");
+                    var toAddress = new MailAddress(user.Email, user.UserName);
+                    //const string fromPassword = "donthackme1";
+                    const string subject = "Reached Limit";
+                    string body = "You have exceeded your monthly spending limit. It is advised you discontinue this frivilous spending";
 
-                postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
-                ViewBag.Message = "File uploaded successfully.";
+                    var smtp = new SmtpClient()
+                    {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        EnableSsl = true,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        Credentials = new NetworkCredential("Nevin.Seibel.Test@gmail.com", "donthackme1"),
+                        Timeout = 20000
+                    };
+
+                    using (var message = new MailMessage(fromAddress, toAddress))
+                    {
+                        message.Subject = subject;
+                        message.Body = body;
+                        message.IsBodyHtml = true;
+
+                        smtp.Send(message);
+                    }
+                }
+                    return RedirectToAction("Index", "Budget");
             }
-            return View(expenditures);
+                return View(expenditures);
         }
 
         // GET: Expenditures/Edit/5

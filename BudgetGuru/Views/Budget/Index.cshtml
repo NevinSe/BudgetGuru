@@ -3,7 +3,12 @@
     ViewBag.Title = "Index";
 }
 
-<h2 style=" color: darkturquoise"><u><i>Budget Command Console</i></u></h2>
+<hr style="border-color:darkturquoise; border-top-width:thick;border-style:outset" />
+<h2 style=" color: darkturquoise; font-family:'Franklin Gothic'">Budget Command Console</h2>
+<hr style="border-color:darkturquoise; border-top-width:thick;border-style:outset" />
+
+
+
 <br />
 <br />
 <div class="row">
@@ -81,7 +86,7 @@
     </div>
     <div class="col-3"></div>
     
-    <div class="table-responsive col-3">
+    <div class="col-3" style="height:400px; overflow:auto">
         <center><h5 style="color: darkorange">Previous Months</h5></center>
         <table class="table">
             <tr>
@@ -111,7 +116,7 @@
 <br />
 <br />
     <div class="row">
-        <div class="table-responsive col-6">
+        <div class="col-6" style="height:400px; overflow:auto">
             <center><h5 style="color: darkorange">Bills</h5></center>
             <table class="table">
                 <tr>
@@ -164,7 +169,7 @@
             </table>
             <hr style="border-color: darkorange" />
         </div>
-        <div class="col-6">
+        <div class="col-6" style="height:400px; overflow:auto">
             <center><h5 style="color: darkorange">Extra Expenditures</h5></center>
             <table class="table">
                 <tr>
@@ -188,8 +193,8 @@
                             $@Html.DisplayFor(modelItem => item.ExpenditureCost)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", "Bills", new { id = item.ExpenditureId }, null) |
-                            @Html.ActionLink("Delete", "Delete", "Bills", new { id = item.ExpenditureId }, null)
+                            @Html.ActionLink("Edit", "Edit", "Expenditures", new { id = item.ExpenditureId }, null) |
+                            @Html.ActionLink("Delete", "Delete", "Expenditures", new { id = item.ExpenditureId }, null)
                         </td>
                     </tr>
                 }
@@ -200,10 +205,11 @@
 
     </div>
 <br />
+<hr style="border-color:darkturquoise"/>
 <br />
 <br />
 <div class="row">
-    <div class="table-responsive col-8">
+    <div class="col-8" style="height:200px; overflow:auto">
         <center><h5 style="color: darkorange">Debt</h5></center>
 
         <table class="table">
@@ -253,7 +259,7 @@
 </div>
 
 <div class="row">
-    <div class="table-responsive col-8">
+    <div class="col-8" style="height:200px; overflow:auto">
         <center><h5 style="color: darkorange">Goals</h5></center>
         <table class="table">
             <tr>
