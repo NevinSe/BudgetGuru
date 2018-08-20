@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using BudgetGuru.Models;
@@ -47,7 +49,7 @@ namespace BudgetGuru.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ExpenditureDescription,ExpenditureCost")] Expenditures expenditures)
+        public ActionResult Create([Bind(Include = "ExpenditureDescription,ExpenditureCost")] Expenditures expenditures, HttpPostedFileBase postedFile)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +60,17 @@ namespace BudgetGuru.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index", "Budget");
             }
+            if (postedFile != null)
+            {
+                string path = Server.MapPath("~/Uploads/");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
 
+                postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
+                ViewBag.Message = "File uploaded successfully.";
+            }
             return View(expenditures);
         }
 
@@ -118,7 +130,6 @@ namespace BudgetGuru.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -126,6 +137,18 @@ namespace BudgetGuru.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        [HttpGet]
+        public ActionResult UploadFile()
+        {
+            return View(); 
+        }
+        [HttpPost]
+        public ActionResult UploadFile(HttpPostedFileBase postedFile)
+        {
+            
+
+            return RedirectToAction("Create", "Expenditures");
         }
     }
 }

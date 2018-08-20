@@ -201,7 +201,9 @@
     <Compile Include="Controllers\ExpendituresController.cs" />
     <Compile Include="Controllers\GoalsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IFormFile.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -343,9 +345,11 @@
     <Content Include="Views\Budget\Index.cshtml" />
     <Content Include="Views\Shared\ChartArrayBasic.cshtml" />
     <Content Include="Views\Budget\Budget.cshtml" />
+    <Content Include="Views\Upload\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
