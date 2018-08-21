@@ -78,7 +78,8 @@
     </div>
 </div>
 <div class="offset-9">@Html.ActionLink("Set Spending Limit", "Budget", "Budget", null)</div>
-<br />
+
+<div class="offset-9">@Html.ActionLink("Add Money to Savings","Savings","Budget")</div>
 <br />
 <div class="row">
     <div class="col-6">
@@ -117,7 +118,7 @@
 <br />
     <div class="row">
         <div class="col-6" style="height:400px; overflow:auto">
-            <center><h5 style="color: darkorange">Bills</h5></center>
+            <center><h5 style="color: darkorange">Unpaid Bills</h5></center>
             <table class="table">
                 <tr>
                     <th>
@@ -166,6 +167,7 @@
                 }
 
                 @Html.ActionLink("Add New Bill?", "Create", "Bills")
+                &ensp;&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;@Html.ActionLink("List of paid bills", "Index", "Bills")
             </table>
             <hr style="border-color: darkorange" />
         </div>
@@ -202,7 +204,6 @@
             </table>
             <hr style="border-color: darkorange" />
         </div>
-
     </div>
 <br />
 <hr style="border-color:darkturquoise"/>
@@ -255,7 +256,6 @@
         </table>
         <hr style="border-color: darkorange" />
     </div>
-
 </div>
 
 <div class="row">

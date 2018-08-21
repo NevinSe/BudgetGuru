@@ -4,41 +4,40 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Bills</h2>
+<h2  style="color:darkturquoise">Paid Bills</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
-        <th>
+        <th style="color:darkorange">
             @Html.DisplayNameFor(model => model.BillDescription)
         </th>
-        <th>
+        <th  style="color:darkorange">
             @Html.DisplayNameFor(model => model.MonthlyCost)
         </th>
-        <th>
+        <th  style="color:darkorange">
             @Html.DisplayNameFor(model => model.IsPaid)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.BillDescription)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MonthlyCost)
+        <td style="color:lightgreen">
+            $@Html.DisplayFor(modelItem => item.MonthlyCost)
+        </td>
+        <td style="color:darkturquoise">
+            Paid
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IsPaid)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BillId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BillId })
+            @Html.ActionLink("Edit", "Edit", new { id = item.BillId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BillId })
         </td>
     </tr>
 }
-
 </table>
+
+@Html.ActionLink("Click here to return to Budget Command Console", "Index", "Budget")
