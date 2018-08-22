@@ -326,7 +326,7 @@
     <Content Include="Views\Bills\Create.cshtml" />
     <Content Include="Views\Bills\Edit.cshtml" />
     <Content Include="Views\Bills\Index.cshtml" />
-    <Content Include="Views\Bills\Delete.cshtml" />
+    <Content Include="Views\Bills\DeleteBill.cshtml" />
     <Content Include="Views\Debts\Create.cshtml" />
     <Content Include="Views\Debts\Delete.cshtml" />
     <Content Include="Views\Debts\Edit.cshtml" />
@@ -346,6 +346,9 @@
     <Content Include="Views\Shared\ChartArrayBasic.cshtml" />
     <Content Include="Views\Budget\Budget.cshtml" />
     <Content Include="Views\Upload\Index.cshtml" />
+    <Content Include="Views\Upload\Downloads.cshtml" />
+    <Content Include="Views\Budget\Savings.cshtml" />
+    <Content Include="Views\Debts\MakePayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

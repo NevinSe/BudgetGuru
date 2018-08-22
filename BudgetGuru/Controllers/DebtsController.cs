@@ -34,7 +34,24 @@ namespace BudgetGuru.Controllers
             }
             return View(debt);
         }
-
+        public ActionResult MakePayment(int? id)
+        {
+            Debt debt = db.Debts.Where(d => d.DebtId == id).Single();
+            return View(debt);
+        }
+        [HttpPost]
+        public ActionResult MakePayment(Debt debt, string Payment)
+        {
+            var month = DateTime.Now.Month;
+            var year = DateTime.Now.Year;
+            var currentDebt = db.Debts.Where(d => d.DebtId == debt.DebtId).Single();
+            var currentBudget = db.Budgets.Where(b => b.UserName == User.Identity.Name && b.MonthId == month && b.Year == year).Single();
+            currentDebt.AmountPaid += int.Parse(Payment);
+            currentDebt.DebtValue -= int.Parse(Payment);
+            currentBudget.MonthTotalCost += int.Parse(Payment);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Budget");
+        }
         // GET: Debts/Create
         public ActionResult Create()
         {

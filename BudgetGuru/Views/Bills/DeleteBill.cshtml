@@ -1,31 +1,29 @@
-﻿@model BudgetGuru.Models.Expenditures
+﻿@model BudgetGuru.Models.Bills
 
 @{
     ViewBag.Title = "Delete";
 }
 
 <br />
-
-<h3 style="color:darkturquoise">Are you sure you want to delete this expenditure?</h3>
+<h3 style="color:darkturquoise">Are you sure you want to delete this?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
         <dt style="color:darkorange">
-            @Html.DisplayNameFor(model => model.ExpenditureDescription)
+            @Html.DisplayNameFor(model => model.BillDescription)
         </dt>
 
         <dd style="color:white">
-            @Html.DisplayFor(model => model.ExpenditureDescription)
+            @Html.DisplayFor(model => model.BillDescription)
         </dd>
 
         <dt style="color:darkorange">
-            @Html.DisplayNameFor(model => model.ExpenditureCost)
+            @Html.DisplayNameFor(model => model.MonthlyCost)
         </dt>
 
         <dd style="color:lightgreen">
-            $@Html.DisplayFor(model => model.ExpenditureCost)
+            $@Html.DisplayFor(model => model.MonthlyCost)
         </dd>
-
     </dl>
 
     @using (Html.BeginForm()) {
@@ -33,9 +31,8 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" />
-           
         </div>
         <br />
-        <div> @Html.ActionLink("Back to Command Console", "Index", "Budget")</div>
+        <div>@Html.ActionLink("Back to List", "Index")</div>
     }
 </div>

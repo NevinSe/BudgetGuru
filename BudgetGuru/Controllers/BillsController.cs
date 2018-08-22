@@ -88,7 +88,25 @@ namespace BudgetGuru.Controllers
             }
             return View(bills);
         }
-
+        public ActionResult DeleteBill(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Bills bills = db.Bills.Find(id);
+            if (bills == null)
+            {
+                return HttpNotFound();
+            }
+            return View(bills);
+        }
+        [HttpPost]
+        public ActionResult DeleteBill(Bills bil)
+        {
+            db.Bills.Remove(bil);
+            return RedirectToAction("Index");
+        }
         // GET: Bills/Delete/5
         public ActionResult Delete(int? id)
         {

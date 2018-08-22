@@ -32,5 +32,20 @@ namespace BudgetGuru.Controllers
 
             return View();
         }
+        public ActionResult Downloads()
+        {
+            var dir = new System.IO.DirectoryInfo(Server.MapPath("~/Uploads/"));
+            System.IO.FileInfo[] fileNames = dir.GetFiles("*.*"); List<string> items = new List<string>();
+            foreach (var file in fileNames)
+            {
+                items.Add(file.Name);
+            }
+            return View(items);
+        }
+        public FileResult Download(string ImageName)
+        {
+            var FileVirtualPath = "~/Uploads/" + ImageName;
+            return File(FileVirtualPath, "application/force-download", Path.GetFileName(FileVirtualPath));
+        }
     }
 }

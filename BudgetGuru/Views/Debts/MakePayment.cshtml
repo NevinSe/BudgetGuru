@@ -1,0 +1,50 @@
+﻿@model BudgetGuru.Models.Debt
+@{
+    ViewBag.Title = "MakePayment";
+}
+
+<h2 style="color:darkturquoise">MakePayment</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.DebtId)
+        <div class="form-group"  style="color:darkturquoise">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2"  style="color:white">
+                @Html.DisplayFor(model =>model.Description)
+            </div>
+        </div>
+        @Html.HiddenFor(model=>model.DebtId)
+        <div class="form-group" style="color:darkturquoise">
+            Amount Left To Pay
+            <div class="col-md-2"  style="color:lightgreen">
+                $@Html.DisplayFor(model => model.DebtValue)
+            </div>
+        </div>
+        <div class="form-group" style="color:darkturquoise">
+            Total Amount Paid Towards This Bill
+            <div class="col-md-2" style="color:lightgreen">
+                $@Html.DisplayFor(model => model.AmountPaid)
+            </div>
+        </div>
+        <div class="col-md-2" style="color:darkturquoise">
+            How much to pay?
+        </div>
+        <div class="col-md-2">
+            @Html.TextBox("Payment", null)
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
