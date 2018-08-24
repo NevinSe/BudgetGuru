@@ -1,7 +1,7 @@
 ﻿<html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title style="color:darkturquoise">Index</title>
 </head>
 <body>
     <br />
@@ -10,14 +10,15 @@
     <div>
         @using (Html.BeginForm("Index", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            <span>Select File:</span>
+            <span style="color:darkorange">Select File:</span>
             <input type="file" name="postedFile" />
             <hr />
             <input type="submit" value="Upload" />
             <br />
-            <span style="color:green">@ViewBag.Message</span>
+            <span style="color:darkorange">@ViewBag.Message</span>
         }
     </div>
+    <br />
     <div>@Html.ActionLink("Return to Expenditures", "Create", "Expenditures")</div>
 </body>
 

@@ -25,7 +25,9 @@ namespace BudgetGuru.Controllers
             budgetModel.Budget = db.Budgets.Where(b => b.UserName == user && b.MonthId == month && b.Year == year).SingleOrDefault();
             if (budgetModel.Budget == default(Budget))
             {
-                budgetModel = NewMonth();
+                budgetModel.Budget = db.Budgets.Where(b => b.UserName == user).Single();
+                budgetModel.Budget.MonthId = month;
+                budgetModel.Budget.Year = year;
             }
             budgetModel.BillsList = db.Bills.Where(b => b.UserName == user && b.IsPaid != true).ToList();
             budgetModel.DebtList = db.Debts.Where(b => b.UserName == user).ToList();
@@ -33,7 +35,14 @@ namespace BudgetGuru.Controllers
             budgetModel.Budget.Bills = budgetModel.BillsList.Where(b=>b.IsPaid != true).Select(p => p.MonthlyCost).Sum();
             budgetModel.Budget.Debt = budgetModel.DebtList.Select(p => p.DebtValue).Sum();
             budgetModel.Budget.ExtraExpenditures = budgetModel.ExpendituresList.Select(p => p.ExpenditureCost).Sum();
-            budgetModel.Budget.MonthlyExpenditures = db.Bills.Where(b => b.UserName == user && b.IsPaid == true).Select(p => p.MonthlyCost).Sum();
+            if(db.Bills.Where(b => b.UserName == user && b.IsPaid == true).Select(p => p.MonthlyCost).Sum() == null)
+            {
+                budgetModel.Budget.MonthlyExpenditures = 0;
+            }
+            else
+            {
+                budgetModel.Budget.MonthlyExpenditures = db.Bills.Where(b => b.UserName == user && b.IsPaid == true).Select(p => p.MonthlyCost).Sum();
+            }
             budgetModel.Budget.MonthTotalCost = budgetModel.Budget.MonthlyExpenditures + budgetModel.Budget.ExtraExpenditures;
             budgetModel.Budget.NetProfit = Math.Round(budgetModel.Budget.Income/12 , 0) - budgetModel.Budget.MonthTotalCost;
             db.SaveChanges();
@@ -148,11 +157,11 @@ namespace BudgetGuru.Controllers
                                 </Legend>
                                 </Legends>
                                 </Chart>";
-            double[] profit = new double[12];
+            double?[] profit = new double?[12];
            
             for (int i = 1; i < 13; i++)
             {
-                var netProfit = db.Budgets.Where(p => p.MonthId == i).Select(p => p.NetProfit).SingleOrDefault();
+                var netProfit = db.Budgets.Where(p => p.MonthId == i && p.UserName == User.Identity.Name).Select(p => p.NetProfit).SingleOrDefault();
                 if (netProfit == default(double))
                 {
                     profit[i - 1] = 0;
@@ -180,7 +189,7 @@ namespace BudgetGuru.Controllers
             var month = DateTime.Now.Month;
             var year = DateTime.Now.Year;
             BudgetModel budgetModel = new BudgetModel();
-            budgetModel.Budget.Income = db.Budgets.Where(b => b.UserName == User.Identity.Name && b.MonthId == (month - 1)).Select(i => i.Income).Single();
+            budgetModel.Budget = db.Budgets.Where(b => b.UserName == User.Identity.Name).Single();
             budgetModel.Budget.MonthId = month;
             budgetModel.Budget.Year = year;
             return budgetModel;

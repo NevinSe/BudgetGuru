@@ -14,7 +14,7 @@ namespace BudgetGuru.Models
         [Display(Name = "Bill Description")]
         public string BillDescription { get; set; }
         [Display(Name = "Monthly Cost")]
-        public double MonthlyCost { get; set; }
+        public double? MonthlyCost { get; set; }
         [Display(Name = "Paid?")]
         public bool IsPaid { get; set; }
     }

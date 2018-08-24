@@ -2,62 +2,64 @@
 @{
     ViewBag.Title = "Home";
 }
-
-<h2>Financial Questionnaire</h2>
+<br />
+<h2 style="color:white">Financial Questionnaire</h2>
+<hr style="border-color:darkorange"/>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>Lets start off with a few questions about your goals</h4>
+    <h4 style="color:darkturquoise">Lets start off with a few questions about your goals</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-            <div class="control-label col-md-2">What is your most desired financial goal?</div>
+    <div class="form-group" style="color:darkorange">
+            <div class="control-label col-md-2" >What is your most desired financial goal?</div>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Goals.GoalDescription, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Goals.GoalDescription, "", new { @class = "text-danger" })
             </div>
         </div>
-    <div class="form-group">
+    <div class="form-group" style="color:darkorange">
         <div class="control-label col-md-12">When would you like to have this goal achieved?</div>
         <br />
-        <div class="col-md-2">
+        <div class="col-md-2" style="color:darkorange">
             Month (Number)
             @Html.TextBox("Month", null, new { @class = "form-control" })
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2" style="color:darkorange">
             Date
             @Html.TextBox("Date", null, new { @class = "form-control" })
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2" style="color:darkorange">
             Year
             @Html.TextBox("Year", null, new { @class = "form-control" })
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" style="color:darkorange">
         <div class="control-label col-md-2">What is the total cost of this Goal?</div>
         <div class="col-md-10">
             @Html.EditorFor(model => model.Goals.TotalCost, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Goals.TotalCost, "", new { @class = "text-danger" })
         </div>
     </div>
-    <h4>Next, a few questions about your money situation</h4>
+    <h4 style="color:darkturquoise">Next, a few questions about your money situation</h4>
     <div class="form-group">
-        <div class="control-label col-md-2">What is your Annual Income?</div>
+        <div class="control-label col-md-2" style="color:darkorange">What is your Annual Income?</div>
         <div class="col-md-10">
             @Html.EditorFor(model => model.Budget.Income, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Budget.Income, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        <div class="control-label col-md-2">How much, if any, savings have you set aside?</div>
+        <div class="control-label col-md-2" style="color:darkorange">How much, if any, savings have you set aside?</div>
         <div class="col-md-10">
             @Html.EditorFor(model => model.Budget.Savings, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Budget.Savings, "", new { @class = "text-danger" })
         </div>
     </div>
-    <h4>Now lets move onto bills</h4>
+    <hr style="border-color:darkorange"/>
+    <h4 style="color:darkturquoise">Now lets move onto bills</h4>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Submit Information" class="btn btn-default" />

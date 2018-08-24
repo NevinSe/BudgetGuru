@@ -40,20 +40,31 @@ namespace BudgetGuru.Controllers
         {
             return View();
         }
-
+        public ActionResult SpendSavings(int? id)
+        {
+            var month = DateTime.Now.Month;
+            var year = DateTime.Now.Year;
+            var goal = db.Goals.Find(id);
+            var monthBudget = db.Budgets.Where(b => b.UserName == User.Identity.Name && b.MonthId == month && b.Year == year).Single();
+            monthBudget.Savings -= goal.TotalCost;
+            db.Goals.Remove(goal);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Budget");
+        }
         // POST: Goals/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "GoalDescription,TotalCost")] Goals goals, string date, string month, string year)
+        public ActionResult Create([Bind(Include = "GoalDescription,TotalCost")] Goals goals, string Date, string Month, string Year)
         {
             if (ModelState.IsValid)
             {
                 goals.UserName = User.Identity.Name;
+                goals.AchievementDate = new DateTime(int.Parse(Year), int.Parse(Month), int.Parse(Date)).Date;
                 db.Goals.Add(goals);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Budget");
             }
 
             return View(goals);

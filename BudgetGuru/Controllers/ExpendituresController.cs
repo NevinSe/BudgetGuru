@@ -43,8 +43,53 @@ namespace BudgetGuru.Controllers
         {
             Expenditures expenditures = new Expenditures();
             return View(expenditures);
-        }
+        } 
+        public ActionResult MultiExpenditure()
+        {
 
+            Expenditures expenditures = new Expenditures();
+            return View(expenditures);
+        }
+        [HttpPost]
+        public ActionResult MultiExpenditure([Bind(Include = "ExpenditureDescription")]Expenditures expenditures, string cost1, string cost2, string cost3, string cost4, string cost5)
+        {
+            ApplicationUser user = new ApplicationUser();
+            var useridentity = User.Identity.Name;
+            expenditures.UserName = User.Identity.Name;
+            expenditures.ExpenditureCost = double.Parse(cost1) + double.Parse(cost2) + double.Parse(cost3) + double.Parse(cost4) + double.Parse(cost5);
+            expenditures.ExpendMonth = DateTime.Now.Month;
+            expenditures.ExpendYear = DateTime.Now.Year;
+            db.Expenditures.Add(expenditures);
+            db.SaveChanges();
+            if (db.Budgets.Where(e => e.UserName == useridentity).Select(p => p.ExtraExpenditures).Sum() > db.Budgets.Where(b => b.UserName == useridentity).Select(q => q.MonthlyLimit).Sum())
+            {
+                var fromAddress = new MailAddress("Nevin.Seibel.Test@gmail.com", "Budget Guru");
+                var toAddress = new MailAddress(user.Email, user.UserName);
+                //const string fromPassword = "donthackme1";
+                const string subject = "Reached Limit";
+                string body = "You have exceeded your monthly spending limit. It is advised you discontinue this frivilous spending";
+
+                var smtp = new SmtpClient()
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    Credentials = new NetworkCredential("Nevin.Seibel.Test@gmail.com", "donthackme1"),
+                    Timeout = 20000
+                };
+
+                using (var message = new MailMessage(fromAddress, toAddress))
+                {
+                    message.Subject = subject;
+                    message.Body = body;
+                    message.IsBodyHtml = true;
+
+                    smtp.Send(message);
+                }
+            }
+            return RedirectToAction("Index", "Budget");
+        }
         // POST: Expenditures/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -148,7 +193,7 @@ namespace BudgetGuru.Controllers
             Expenditures expenditures = db.Expenditures.Find(id);
             db.Expenditures.Remove(expenditures);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Budget");
         }
         protected override void Dispose(bool disposing)
         {

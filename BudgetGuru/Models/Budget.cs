@@ -22,17 +22,17 @@ namespace BudgetGuru.Models
         [Display(Name = "Montly Limit")]
         public double MonthlyLimit { get; set; }
         [Display(Name = "Monthly Cost")]
-        public double MonthTotalCost { get; set; }
+        public double? MonthTotalCost { get; set; }
         [Display(Name = "Monthly Expenditures")]
-        public double MonthlyExpenditures { get; set; }
+        public double? MonthlyExpenditures { get; set; }
         [Display(Name = "Extra Expenditures")]
         public double ExtraExpenditures { get; set; }
         [Display(Name = "Bills to Pay")]
-        public double Bills { get; set; }
+        public double? Bills { get; set; }
         [Display(Name = "Debt Total")]
         public double Debt { get; set; }
         [Display(Name = "Net Profit")]
-        public double NetProfit { get; set; }
+        public double? NetProfit { get; set; }
         [Display(Name = "Savings")]
         public double Savings { get; set; }
 

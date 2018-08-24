@@ -77,10 +77,10 @@
         <hr style="border-color: darkorange" />
     </div>
 </div>
-<div class="offset-9">@Html.ActionLink("Set Spending Limit", "Budget", "Budget", null)</div>
+<div class="">@Html.ActionLink("Set Spending Limit", "Budget", "Budget", null)</div>
 
-<div class="offset-9">@Html.ActionLink("Add Money to Savings","Savings","Budget")</div>
-<br />
+<div class="">@Html.ActionLink("Add Money to Savings","Savings","Budget")</div>
+<hr style="border-color:darkturquoise"/>
 <div class="row">
     <div class="col-6">
         <img src="@Url.Action("BudgetChart")" />
@@ -89,7 +89,7 @@
     
     <div class="col-3" style="height:400px; overflow:auto">
         <center><h5 style="color: darkorange">Previous Months</h5></center>
-        <table class="table">
+        <table class="table" >
             <tr>
                 <th>
                     <u style="color: darkturquoise">@Html.DisplayNameFor(model => model.Budget.MonthId) / @Html.DisplayNameFor(model => model.Budget.Year)</u>
@@ -114,7 +114,7 @@
     </div>
 </div>
 <br />
-<br />
+<hr style="border-color:darkturquoise" />
 <br />
     <div class="row">
         <div class="col-6" style="height:400px; overflow:auto">
@@ -163,6 +163,8 @@
                             <center style="color: yellow">You Paid All Your bills!</center>
                         </td>
                         <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 }
 
@@ -201,6 +203,7 @@
                     </tr>
                 }
                 @Html.ActionLink("Add Expenditure?", "Create", "Expenditures")
+                &ensp;&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;@Html.ActionLink("View Documents", "Downloads", "Upload")
             </table>
             <hr style="border-color: darkorange" />
         </div>
@@ -289,8 +292,15 @@
                     <td style="color: lightgreen">
                         @Html.DisplayFor(modelItem => item.AchievementDate)
                     </td>
-                    <td>
-                        @Html.ActionLink("Use Savings to Achieve Goal?", "Edit", "Goals", new { id = item.GoalId }, null)
+                    <td style="color:yellow">
+                        @if(item.TotalCost > Model.Budget.Savings)
+                        {
+                            <div>Not enough savings for goal</div>
+                        }
+                        else if(item.TotalCost <= Model.Budget.Savings)
+                        {
+                             @Html.ActionLink("Use Savings to Achieve Goal?", "SpendSavings", "Goals", new { id = item.GoalId }, null)
+                        }
                     </td>
                 </tr>
             }

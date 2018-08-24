@@ -2,11 +2,12 @@
     ViewBag.Title = "Downloads";
 }
 @model List<string>
-<h2>Downloads</h2>
+    <br />
+<h2 style="color:darkturquoise">Downloads</h2>
 <table>
     <tr>
-        <th>File Name</th>
-        <th>Link</th>
+        <th style="color:darkorange">File Name</th>
+        <th style="color:darkorange">Link</th>
     </tr>
     @for (var i = 0; i <= Model.Count - 1; i++)
     {
@@ -19,3 +20,6 @@
     </tr>
     }
 </table>
+<br />
+<br />
+<div>@Html.ActionLink("Back to Command Console","Index","Budget")</div>

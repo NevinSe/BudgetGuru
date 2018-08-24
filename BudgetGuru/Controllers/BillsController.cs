@@ -78,7 +78,7 @@ namespace BudgetGuru.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BillDescription,MonthlyCost")] Bills bills)
+        public ActionResult Edit([Bind(Include = "BillDescription,MonthlyCost,IsPaid")] Bills bills)
         {
             if (ModelState.IsValid)
             {
@@ -101,10 +101,12 @@ namespace BudgetGuru.Controllers
             }
             return View(bills);
         }
-        [HttpPost]
-        public ActionResult DeleteBill(Bills bil)
+        [HttpPost, ActionName("DeleteBill")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteBill([Bind(Include = "BillDescription,MonthlyCost")]Bills bil)
         {
             db.Bills.Remove(bil);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
         // GET: Bills/Delete/5

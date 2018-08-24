@@ -223,6 +223,14 @@
     <Compile Include="Migrations\201808171626116_monthlylimitadded.Designer.cs">
       <DependentUpon>201808171626116_monthlylimitadded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808231617330_thing.cs" />
+    <Compile Include="Migrations\201808231617330_thing.Designer.cs">
+      <DependentUpon>201808231617330_thing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808231620338_morethings.cs" />
+    <Compile Include="Migrations\201808231620338_morethings.Designer.cs">
+      <DependentUpon>201808231620338_morethings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Bills.cs" />
@@ -349,6 +357,8 @@
     <Content Include="Views\Upload\Downloads.cshtml" />
     <Content Include="Views\Budget\Savings.cshtml" />
     <Content Include="Views\Debts\MakePayment.cshtml" />
+    <Content Include="Views\Goals\SpendSavings.cshtml" />
+    <Content Include="Views\Expenditures\MultiExpenditure.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -377,6 +387,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808171626116_monthlylimitadded.resx">
       <DependentUpon>201808171626116_monthlylimitadded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808231617330_thing.resx">
+      <DependentUpon>201808231617330_thing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808231620338_morethings.resx">
+      <DependentUpon>201808231620338_morethings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
